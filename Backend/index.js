@@ -1,8 +1,8 @@
 const app = require('./app')
-const port = 3000
+const config = require('./utils/config')
 
 
 
-app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`)
+app.listen(config.PORT, () => {
+  console.log(`Example app listening on port http://localhost:${config.PORT}`)
 })
