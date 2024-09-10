@@ -5,19 +5,20 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true,
+        
     },
     email: {
         type: String,
         required: true,
         trim: true,
-        unique: true,
+        
         lowercase: true,
     },
     passwordHash: {
         type: String,
         required: true,
     },
+    isVerified : {type : Boolean,default: false},
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
     replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reply' }],
     date: {
