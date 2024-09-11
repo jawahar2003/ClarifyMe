@@ -4,6 +4,7 @@ require('express-async-errors')
 const mongoose = require('mongoose')
 const express = require('express')
 const userRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
 const app = express()
 
 
@@ -21,6 +22,7 @@ mongoose.connect(config.MONGODB_URI).then(()=>{
 app.use(express.json())
 
 app.use('/api/users',userRouter)
+app.use('/api/users',loginRouter)
 app.use(errorHandler)
 
 module.exports = app
