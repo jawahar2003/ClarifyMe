@@ -1,6 +1,8 @@
 const loginRouter = require('express').Router()
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const config = require('../utils/config')
 
 // POST /api/auth/login
 loginRouter.post('/login', async (req, res) => {
@@ -23,8 +25,6 @@ loginRouter.post('/login', async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid username or password' });
         }
-        console.log(user.isVerfiied)
-        console.log(user.email)
         
 
         // Check if user is verified
@@ -32,12 +32,21 @@ loginRouter.post('/login', async (req, res) => {
             return res.status(403).json({ message: 'User not verified' });
         }
 
+        //token Generation
+
+        const userForToken = {
+            username: user.username,
+            id: user._id
+        }
+      
+        const token = jwt.sign(userForToken, config.JWT_SECRET , { expiresIn: '10h' })
+
         // Successful login
         res.status(200).json({
             message: 'Login successful',
             user: {
+                token,
                 username: user.username,
-                isVerified: user.isVerified
             }
         });
     } catch (err) {
