@@ -9,7 +9,7 @@ const otpGenerator = require('otp-generator');
 
 //fetch all user details
 userRouter.get('/getall',async (request,response)=>{
-    const users = await User.find({})
+    const users = await User.find({}).populate('questions')
     return response.json(users);
 })
 
@@ -110,7 +110,7 @@ userRouter.post('/register',async (request,response,next)=>{
           
             res.status(200).json({ message: 'Email verified successfully' });
          
-        });
+        })
     
 
 module.exports = userRouter
