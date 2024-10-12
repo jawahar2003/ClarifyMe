@@ -1,5 +1,5 @@
 const config = require('./utils/config')
-const errorHandler = require('./utils/middleware')
+const middleware = require('./utils/middleware')
 require('express-async-errors')
 const mongoose = require('mongoose')
 const express = require('express')
@@ -23,7 +23,8 @@ app.use(express.json())
 
 app.use('/api/users',userRouter)
 app.use('/api/users',loginRouter)
-app.use(errorHandler)
+app.use(middleware.errorHandler)
 
 module.exports = app
+
 

@@ -21,7 +21,7 @@ const mailSender = async (email, title, body) => {
     subject: title,
     html: body,
   });
-  console.log("Email info: ", info);
+  //console.log("Email info: ", info);
   return info;
   
 };

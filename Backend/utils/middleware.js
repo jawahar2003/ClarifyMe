@@ -5,6 +5,8 @@ const errorHandler = (error, request, response, next) =>{
         return response.status(409).json({error: error.message})
     else if(error.code === "EAUTH")
         return response.status(500).json({error: error.message})
+
+    next(next)
 }
 
 
