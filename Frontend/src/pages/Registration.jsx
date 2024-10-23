@@ -47,25 +47,29 @@ const RegistrationForm = () => {
         
         {/* Left Side - Image Section */}
         <div
-          className="w-1/2 bg-cover bg-center relative hidden md:block"
-          style={{ backgroundImage: "url('path-to-your-image.jpg')" }}
+          className="w-1/2 bg-cover bg-center relative bg-[url('./assets/bg2.jpg')] bg-fixed"
+          style={{ backgroundPosition: 'top center', backgroundSize: '100%' }}
         >
-          <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="relative z-10 p-8 flex flex-col items-start justify-center h-full">
-            <a href="#" className="text-white text-lg mb-6">Back to website</a>
-            <h2 className="text-white text-4xl font-bold mb-6">
-              Capturing Moments, Creating Memories
-            </h2>
+            
+            <h1 className="text-white text-7xl font-bold mb-6">
+              <span className='text-purple-800 hover:text-purple-500 transition-colors duration-300'>Capturing</span> 
+              <span className='hover:text-purple-500 transition-colors duration-300'> Moments,</span><br /> 
+              <span className='hover:text-purple-600 transition-colors duration-300'>Creating</span> 
+              <span className='hover:text-purple-700 transition-colors duration-300'> Memories</span>
+            </h1>
           </div>
         </div>
   
         {/* Right Side - Registration Form */}
-        <div className="w-full md:w-1/2 bg-gray-800 flex items-center justify-center">
+        <div className="w-full md:w-1/2 bg-[url('./assets/bg2.jpg')] bg-fixed flex items-center justify-center"
+        style={{ backgroundPosition: 'top center', backgroundSize: '100%' }}>
           <div className="max-w-md w-full space-y-8 bg-gray-900 p-8 rounded-lg">
             <h2 className="text-3xl font-bold text-white">Create an account</h2>
             <p className="text-gray-400">
-              Already have an account? <a href="#" className="text-purple-500"><Link to='/login'>Log in</Link></a>
+              Already have an account? <Link to="/login" className="text-purple-500">Log in</Link>
             </p>
+
   
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               <div>
