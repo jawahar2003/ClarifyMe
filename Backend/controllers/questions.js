@@ -10,21 +10,26 @@ const questionRouter = express.Router();
 // Fetch all questions
 questionRouter.get('/all', async (req, res) => {
     try {
-        const questions = await Question.find().populate({
-            path: 'replies',
-            options: { limit: 5 },  // Limits top-level replies
-            populate: {
-                path: 'replies',  // Populate the replies of replies (nested replies)
+        const questions = await Question.find()
+            .populate({
+                path: 'author',  // Populate the user who authored the question
+                select: 'username email',  // Select specific fields from the User model
+            })
+            .populate({
+                path: 'replies',
                 populate: {
-                    path: 'replies',  // This is to populate even further levels of replies
-                },
-            },
-        })
+                    path: 'author',  // Populate the user who authored the reply
+                    select: 'username email',  // Select specific fields from the User model
+                }
+            });
+
         res.status(200).json(questions);
     } catch (error) {
+        throw error
         res.status(500).json({ message: 'Error fetching questions', error });
     }
 });
+
 
 // Post a new question
 questionRouter.post('/question',tokenExtractor,userExtractor, async (req, res) => {
@@ -76,6 +81,19 @@ questionRouter.delete('/question/:id', tokenExtractor, userExtractor, async (req
         res.status(500).json({ message: 'Error deleting question', error });
     }
 });
+
+questionRouter.delete('/deleteAll',async (request,response)=>{
+
+    try{
+        await Question.deleteMany({}).then(()=>{
+            return response.json({action:"All Questions deleted"})
+        })
+    }
+    catch(e){
+        throw e
+    }
+
+})
 
 
 

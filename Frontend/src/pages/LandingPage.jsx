@@ -23,12 +23,12 @@ const LandingPage = () => {
 
         {/* Buttons */}
         <div className="flex justify-center space-x-4 mt-8">
-          <a 
+          <Link to='/login'
             className="bg-white bg-opacity-20 border border-white border-opacity-40 text-white py-3 px-8 rounded-full backdrop-blur-sm shadow-lg hover:bg-purple-500  hover:border-opacity-50 hover:backdrop-blur-0 transition duration-300 ease-in-out text-lg sm:text-xl"
             // style={{ backdropFilter: 'blur(10px)' }}
           >
-           <Link to='/login'>Get Started</Link>
-          </a>
+          Get Started
+          </Link>
         </div>
       </div>
     </div>

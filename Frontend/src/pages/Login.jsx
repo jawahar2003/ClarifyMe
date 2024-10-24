@@ -15,7 +15,7 @@ const Login = () => {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('loggedUser'))
     if(userData){
-
+      
       setUser({ token: userData.data.user.token, username: userData.data.user.username })
       navigate('/home')
     }
@@ -34,6 +34,9 @@ const Login = () => {
       alert('User logged in successfully!');
       console.log(user);
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      const userData = JSON.parse(localStorage.getItem('loggedUser'))
+      setUser({ token: userData.data.user.token, username: userData.data.user.username })
+      
       navigate('/home');
     }
 

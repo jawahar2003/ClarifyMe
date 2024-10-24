@@ -1,10 +1,13 @@
 import {create} from 'zustand';
+import zukeeper from'zukeeper';
 
-const useStore = create((set) => ({
+const useStore = create(zukeeper((set) => ({
   user:{
     token:'',
     username:''
   },
+  questions:[],
+  setQuestions:(questions) => set({questions}),
   setUser:(user) =>set({ user }),
   userName: '',
   email: '',
@@ -14,6 +17,6 @@ const useStore = create((set) => ({
   setEmail: (email) => set({ email }),
   setPassword: (password) => set({ password }),
   setConfirmPassword: (confirmPassword) => set({ confirmPassword }),
-}));
-
+})));
+window.store = useStore
 export default useStore;

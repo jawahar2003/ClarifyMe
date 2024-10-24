@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+
 const baseURL = 'http://localhost:3000/api'
 const registerUser = async (userData) => {
     try {
@@ -33,7 +35,43 @@ const loginUser = async (credentials) => {
     }
 }
 
+const fetchQuestions = async()=>{
+    try{
+        const response = await axios.get(`${baseURL}/questions/all`)
+        // console.log(response.data)
+        return response.data
+    }
+    catch(error){
+        console.log("Error fetching questions")
+        throw error;
+    }
+}
 
 
-export default { registerUser, verifyOTP, loginUser };
+const postReply = async (questionId, replyData,token) => {
+    try {
+        // Retrieve the JWT from local storage or wherever it is stored
+        
+        
+        // Set up the headers
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' // Set content type if necessary
+            }
+        };
+
+        // Make the POST request with the reply data
+        const response = await axios.post(`${baseURL}/replies/${questionId}`, replyData, config);
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.log("Error posting replies", error);
+    }
+}
+
+
+
+
+export default { registerUser, verifyOTP, loginUser, fetchQuestions, postReply };
 
