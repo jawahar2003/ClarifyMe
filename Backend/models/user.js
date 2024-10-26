@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema({
     replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reply' }],
     date: {
         type: Date,
-        default: Date.now,
+        default: () => {
+            const now = new Date();
+            const istOffset = 5.5 * 60 * 60 * 1000; // UTC+5:30
+            return new Date(now.getTime() + istOffset);
+        },
     },
 });
 

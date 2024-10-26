@@ -72,6 +72,26 @@ const postReply = async (questionId, replyData,token) => {
 
 
 
+const postQuestion = async (questionData, token) => {
+    try {
+        // Set up the headers with the JWT for authentication
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' // Set content type if necessary
+            }
+        };
 
-export default { registerUser, verifyOTP, loginUser, fetchQuestions, postReply };
+        // Make the POST request to submit a new question
+        const response = await axios.post(`${baseURL}/questions/question`, questionData, config);
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.error("Error posting question", error);
+    }
+};
+
+
+
+export default { registerUser, verifyOTP, loginUser, fetchQuestions, postReply , postQuestion};
 

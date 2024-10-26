@@ -53,10 +53,10 @@ const RegistrationForm = () => {
           <div className="relative z-10 p-8 flex flex-col items-start justify-center h-full">
             
             <h1 className="text-white text-7xl font-bold mb-6">
-              <span className='text-purple-800 hover:text-purple-500 transition-colors duration-300'>Capturing</span> 
-              <span className='hover:text-purple-500 transition-colors duration-300'> Moments,</span><br /> 
-              <span className='hover:text-purple-600 transition-colors duration-300'>Creating</span> 
-              <span className='hover:text-purple-700 transition-colors duration-300'> Memories</span>
+              <span className='text-purple-800 hover:text-purple-500 transition-colors duration-300'>Collaborate,</span> 
+              <span className='hover:text-purple-500 transition-colors duration-300'> Learn,</span><br />   
+              <span className='hover:text-purple-600 transition-colors duration-300'>and</span> 
+              <span className='hover:text-purple-700 transition-colors duration-300'>  Grow Together</span>
             </h1>
           </div>
         </div>
