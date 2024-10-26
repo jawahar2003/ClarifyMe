@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import connectivity from '../utils/connectivity';
+import useStore from '../store/store';
 
 
 
@@ -9,21 +10,35 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  const user = useStore(state => state.user)
+  const setUser = useStore(state => state.setUser)
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('loggedUser'))
+    if(userData){
+      
+      setUser({ token: userData.data.user.token, username: userData.data.user.username })
+      navigate('/home')
+    }
+    
+
+  
+  }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-const user = await connectivity.loginUser({username,password});
-if(user.status===200){
-    alert('User logged in successfully!');
-    console.log(user);
-    window.localStorage.setItem('loggedUser', JSON.stringify(user))
-    //navigate('/dashboard');
-}
-    
-
-    
+    const user = await connectivity.loginUser({ username, password });
+    if (user.status === 200) {
+      alert('User logged in successfully!');
+      console.log(user);
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      const userData = JSON.parse(localStorage.getItem('loggedUser'))
+      setUser({ token: userData.data.user.token, username: userData.data.user.username })
+      
+      navigate('/home');
+    }
 
   };
 
@@ -31,25 +46,27 @@ if(user.status===200){
     <div className="min-h-screen flex">
       {/* Left Side - Image Section */}
       <div
-        className="w-1/2 bg-cover bg-center relative hidden md:block"
-        style={{ backgroundImage: "url('path-to-your-image.jpg')" }}
+        className="w-1/2 bg-cover bg-center bg-[url('./assets/bg2.jpg')] bg-fixed relative "
+        style={{ backgroundPosition: 'top center', backgroundSize: '100%' }}
       >
-        <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 p-8 flex flex-col items-start justify-center h-full">
-          <a href="#" className="text-white text-lg mb-6">Back to website</a>
-          <h2 className="text-white text-4xl font-bold mb-6">
-            Welcome Back!
+          <h2 className="text-white text-7xl font-bold mb-6">
+            <span className='text-purple-800 hover:text-purple-500 transition-colors duration-300'>Welcome </span>
+            <span className='hover:text-purple-500 transition-colors duration-300'>Back!</span>
           </h2>
         </div>
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-full md:w-1/2 bg-gray-800 flex items-center justify-center">
+      <div className="w-full md:w-1/2 bg-[url('./assets/bg2.jpg')] bg-fixed flex items-center justify-center"
+        style={{ backgroundPosition: 'top center', backgroundSize: '100%' }}
+      >
         <div className="max-w-md w-full space-y-8 bg-gray-900 p-8 rounded-lg">
           <h2 className="text-3xl font-bold text-white">Login </h2>
           <p className="text-gray-400">
-            Don't have an account? <a href="#" className="text-purple-500"><Link to="/connectivity">connectivity here</Link></a>
+            Don't have an account? <Link to="/register" className="text-purple-500">Register here</Link>
           </p>
+
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div>
@@ -62,7 +79,7 @@ if(user.status===200){
                 type="text"
                 required
                 className="mt-1 p-2 block w-full bg-gray-700 text-white rounded-md border-gray-600 focus:ring-purple-500 focus:border-purple-500"
-                
+
               />
             </div>
 
@@ -76,7 +93,7 @@ if(user.status===200){
                 type="password"
                 required
                 className="mt-1 p-2 block w-full bg-gray-700 text-white rounded-md border-gray-600 focus:ring-purple-500 focus:border-purple-500"
-        
+
               />
             </div>
 

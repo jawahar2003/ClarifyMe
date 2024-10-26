@@ -27,21 +27,25 @@ const OtpVerificationPage = () => {
     <div className="min-h-screen flex">
       {/* Left Side - Image Section */}
       <div
-        className="w-1/2 bg-cover bg-center relative hidden md:block"
-        style={{ backgroundImage: "url('path-to-your-image.jpg')" }} // Change path-to-your-image.jpg to actual image path
+        className="w-1/2 bg-cover bg-center relative bg-[url('./assets/bg2.jpg')] bg-fixed"
+        style={{ backgroundPosition: 'top center', backgroundSize: '100%' }} // Change path-to-your-image.jpg to actual image path
       >
-        <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 p-8 flex flex-col items-start justify-center h-full">
-          <h2 className="text-white text-4xl font-bold mb-6">
-            Verify Your OTP
+          <h2 className="text-white text-7xl font-bold mb-6">
+            <span className='text-purple-800 hover:text-purple-500 transition-colors duration-300'>Kindly</span> <br />
+            <span className='hover:text-purple-500 transition-colors duration-300'>Check</span>
+            <span className='hover:text-purple-600 transition-colors duration-300'> your</span> 
+            <span className='hover:text-purple-700 transition-colors duration-300'> E-Mail!</span>
           </h2>
         </div>
       </div>
 
       {/* Right Side - OTP Form */}
-      <div className="w-full md:w-1/2 bg-gray-800 flex items-center justify-center">
+      <div className="w-full md:w-1/2 bg-[url('./assets/bg2.jpg')] bg-fixed flex items-center justify-center"
+      style={{ backgroundPosition: 'top center', backgroundSize: '100%' }}
+      >
         <div className="max-w-md w-full space-y-8 bg-gray-900 p-8 rounded-lg">
-          <h2 className="text-3xl font-bold text-white">Verify OTP</h2>
+          <h2 className="text-xl font-bold text-white">Verify OTP</h2>
           <p className="text-gray-400">
             Please enter the OTP sent to <span className="font-semibold">{email}</span>.
           </p>

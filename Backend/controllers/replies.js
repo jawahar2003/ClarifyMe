@@ -19,9 +19,9 @@ replyRouter.get('/', async (req, res) => {
 // POST /replies/:questionId
 replyRouter.post('/:questionId', tokenExtractor, userExtractor, async (req, res) => {
     const { questionId } = req.params;
-    const { body, parentReplyId } = req.body;  // parentReplyId is optional
+    const { body} = req.body;  // parentReplyId is changed
     const userId = req.user.id; // Extracted user ID from userExtractor middleware
-
+   
     try {
         // Find the user
         const user = await User.findById(userId);
@@ -29,7 +29,7 @@ replyRouter.post('/:questionId', tokenExtractor, userExtractor, async (req, res)
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Find the question
+        // Find the question\   
         const question = await Question.findById(questionId);
         if (!question) {
             return res.status(404).json({ message: 'Question not found' });
@@ -40,26 +40,27 @@ replyRouter.post('/:questionId', tokenExtractor, userExtractor, async (req, res)
             body,
             author: userId,
             question: questionId,
-            parentReply: parentReplyId || null
+            // parentReply: parentReplyId || null
         });
 
         // Save the reply
         await reply.save();
 
-        if (parentReplyId) {
-            // If it's a nested reply, add it to the parent reply's replies array
-            const parentReply = await Reply.findById(parentReplyId);
-            if (!parentReply) {
-                return res.status(404).json({ message: 'Parent reply not found' });
-            }
-            parentReply.replies.push(reply._id);
-            await parentReply.save();
-        } else {
-            // Add the reply to the question's replies array if it's a top-level reply
-            question.replies.push(reply._id);
-            await question.save();
-        }
-
+        // if (parentReplyId) {
+        //     // If it's a nested reply, add it to the parent reply's replies array
+        //     const parentReply = await Reply.findById(parentReplyId);
+        //     if (!parentReply) {
+        //         return res.status(404).json({ message: 'Parent reply not found' });
+        //     }
+        //     parentReply.replies.push(reply._id);
+        //     await parentReply.save();
+        // } else {
+        //     // Add the reply to the question's replies array if it's a top-level reply
+        //     question.replies.push(reply._id);
+        //     await question.save();
+        // }
+        question.replies.push(reply._id);
+        await question.save();
         // Add the reply to the user's replies array
         user.replies.push(reply._id);
         await user.save();
@@ -120,5 +121,12 @@ replyRouter.delete('/:replyId', tokenExtractor, userExtractor, async (req, res) 
         res.status(500).json({ message: 'Server error', error });
     }
 });
+
+
+replyRouter.delete('/deleteAll',async (request,response)=>{
+    await Reply.deleteMany({}).then(()=>{
+        return response.json({action:"All Replies deleted"})
+    })
+})
 
 module.exports = replyRouter;
