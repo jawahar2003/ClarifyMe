@@ -17,6 +17,13 @@ const Home = () => {
   const [isComposeVisible, setIsComposeVisible] = useState(false);
   const [newQuestion, setNewQuestion] = useState({ title: '', body: '' });
   const [search, setSearch] = useState('');
+  const [newCategory, setNewCategory] = useState('');
+  const [categories, setCategories] = useState([
+    'Programming',
+    'Mathematics',
+    'Science',
+    'Languages',
+  ]);
   
   // State to store filtered questions
   const [filteredQuestions, setFilteredQuestions] = useState(questions);
@@ -46,6 +53,13 @@ const Home = () => {
       ));
     }
   }, [search, questions]);
+
+  const handleAddCategory = () => {
+    if (newCategory.trim()) {
+      setCategories([...categories, newCategory]);
+      setNewCategory('');
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('loggedUser');
@@ -119,22 +133,30 @@ const Home = () => {
 
       {/* Main Content */}
       <div className="flex ">
-        <aside className="w-1/4 bg-gray-800 p-4 space-y-4 hidden md:block sticky top-[72px] h-full">
+      <aside className="w-1/4 bg-gray-800 p-4 space-y-4 hidden md:block sticky top-[72px] h-full">
           <h2 className="text-gray-400 text-xl font-bold ">Topics</h2>
           <ul className="space-y-2">
-            <li className="bg-gray-700 p-2 rounded-md hover:bg-purple-500 transition">
-              <Link to="#" className="block">Programming</Link>
-            </li>
-            <li className="bg-gray-700 p-2 rounded-md hover:bg-purple-500 transition">
-              <Link to="#" className="block">Mathematics</Link>
-            </li>
-            <li className="bg-gray-700 p-2 rounded-md hover:bg-purple-500 transition">
-              <Link to="#" className="block">Science</Link>
-            </li>
-            <li className="bg-gray-700 p-2 rounded-md hover:bg-purple-500 transition">
-              <Link to="#" className="block">Languages</Link>
-            </li>
+            {categories.map((category, index) => (
+              <li key={index} onClick={()=> setSearch(category)}className="bg-gray-700 p-2 rounded-md hover:bg-purple-500 transition">
+                {category}
+              </li>
+            ))}
           </ul>
+          <div className="mt-4">
+            <input
+              type="text"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              placeholder="Add new category"
+              className="w-full p-2 rounded-md bg-gray-700 text-white placeholder-gray-400 mt-2"
+            />
+            <button
+              onClick={handleAddCategory}
+              className="mt-2 bg-purple-600 px-4 py-2 rounded-lg hover:bg-purple-700 transition w-full"
+            >
+              Add Category
+            </button>
+          </div>
         </aside>
 
         {/* Middle/Right Side: Q&A Section */}
