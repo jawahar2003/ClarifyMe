@@ -9,7 +9,8 @@ const registerUser = async (userData) => {
         console.log('User registered:', response.status,response.data.message);
         return response;
     } catch (error) {
-        console.error('Error registering user:', error.response.data);
+        console.log('Error registering user:', error.response.data.message);
+        return error.response
         
     }
 }
@@ -30,8 +31,8 @@ const loginUser = async (credentials) => {
         console.log('User logged in:', response.status, response.data.message);
         return response;
     } catch (error) {
-        console.error('Error logging in user:', error.response.data);
-        throw error;
+        console.error('Error logging in user:', error.response.data.message);
+        return error.response;
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import connectivity from '../utils/connectivity';
@@ -12,6 +12,7 @@ const Login = () => {
 
   const user = useStore(state => state.user)
   const setUser = useStore(state => state.setUser)
+  const [errorMessage, setErrorMessage] = useState('');
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('loggedUser'))
     if(userData){
@@ -38,6 +39,10 @@ const Login = () => {
       setUser({ token: userData.data.user.token, username: userData.data.user.username })
       
       navigate('/home');
+    }
+    else{
+      setErrorMessage(user?.data?.message);
+      setTimeout(() => setErrorMessage(''),4000)
     }
 
   };
@@ -66,6 +71,13 @@ const Login = () => {
           <p className="text-gray-400">
             Don't have an account? <Link to="/register" className="text-purple-500">Register here</Link>
           </p>
+
+          {errorMessage && (
+            <div className="text-red-500 text-sm mt-2">
+              {errorMessage}
+            </div>
+          )}
+
 
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>

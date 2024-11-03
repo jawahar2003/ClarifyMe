@@ -42,8 +42,8 @@ userRouter.post('/register',async (request,response,next)=>{
         console.log(`Email:${isValidEmail}`)
         console.log(`pass:${isValidPassword}`)
 
-        if(!isValidEmail) return response.status(400).send("not a valid email")
-        if(!isValidPassword) return response.status(400).json({error: "Invalid password. It must contain at least one uppercase letter, one special character, and be at least 8 characters long."})
+        if(!isValidEmail) return response.status(400).json({message: "Not a valid email - use @srmist.edu.in only"})
+        if(!isValidPassword) return response.status(400).json({message: "Invalid password. It must contain at least one uppercase letter, one special character, and be at least 8 characters long."})
         
         const saltRounds = 10
         const passwordHash = await bcrypt.hash(password, saltRounds)
