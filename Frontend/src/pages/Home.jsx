@@ -186,8 +186,15 @@ const Home = () => {
                     <>View replies <span className="text-gray-500 text-xs">▼</span></> // Down arrow for viewing answers
                   )}
                 </button>
-
-                <span className="text-gray-500">~{question.author.username}</span>
+                  <div>
+                    <span className="text-gray-500">~{question.author.username+" | "}</span>
+                    <span className="text-gray-500">
+                      {new Date(question.date).toLocaleString('en-GB', {
+                        dateStyle: 'short',
+                        timeStyle: 'short'
+                      })}
+                    </span>
+                  </div>
               </div>
 
               {repliesVisible[question._id] && (
@@ -195,7 +202,16 @@ const Home = () => {
                   {question.replies.map((reply) => (
                     <div key={reply._id} className="bg-gray-700 p-2 rounded-md mt-2 flex justify-between">
                       <p className="text-gray-200">{reply.body}</p>
-                      <p className="text-gray-500">~{reply.author.username}</p>
+
+                      <div>
+                        <p className="text-gray-500">~{reply.author.username}</p>
+                        <span className="text-gray-500">
+                            {new Date(reply.date).toLocaleString('en-GB', {
+                              dateStyle: 'short',
+                              timeStyle: 'short'
+                            })}
+                        </span>
+                      </div>
                     </div>
                   ))}
                   <textarea
